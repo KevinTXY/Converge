@@ -71,6 +71,12 @@ h1{
     margin-bottom: : 10px;
 }
 
-#add_type {
-    
+
+
+.button {
+    background-image: url('https://i.imgur.com/4wfJtlc.png');
+    background-size: cover;
+    width: 280px;
+    height: 44px;
+    margin: 0 auto;
 }

@@ -28,6 +28,7 @@
       $(function() {
 
         $(window).load(function(){
+          var uber = "https://i.imgur.com/uluhV3G.png"
           var image = "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
 
           var map
@@ -123,6 +124,7 @@
                           content += "<img width=\"15px\" src=\"" + place.icon + "\">";
                           content +=  "<b> " + place.name + "</b><br>";
                           content += "Address: " + place.vicinity; + "<br>";
+                          content +="</br><a href=\"https://m.uber.com/ul/?action=setPickup\"><img width=\"30%\" height=\"50%\" src=\"" + uber + "\" /></a>";
 
                           infowindow.setContent(content);
                           infowindow.open(map, this);
