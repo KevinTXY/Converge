@@ -15,6 +15,7 @@
     {% for i in range(0, total): %}
       <input hidden value="{{ items[i] }}" name="items_{{ i }}" id="items_{{ i }}"/>
     {% endfor %}
+    <input hidden value="{{ type }}" name="{{ type }}" id="type"/>
 
     <div id="map"></div>
     <script>
@@ -33,6 +34,8 @@
           var map
 
           var total = $("#total").val();
+          var type = $("#type").val();
+          console.log("TYPE FIRST: type");
 
           var items = [];
 
@@ -100,7 +103,7 @@
                                   service.nearbySearch({
                                     location:location,
                                     radius: 500,
-                                    type: ['restaurant']
+                                    type: [type]
                                   }, callback);
                       function callback(results, status) {
                         if (status === google.maps.places.PlacesServiceStatus.OK){
