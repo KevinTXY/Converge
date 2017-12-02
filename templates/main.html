@@ -8,17 +8,53 @@
   <h1>  Add New Addresses </h1>
 
   <div id="todo-table">
-    <form>
-      <input type="text" name="item" placeholder="Add new address..." required />
-      <button type="submit">Add Item</button>
-
-      <ul>
-        <li>
-
-        </li>
-      </ul>
+    <form id="address_form" method="post" action="/result" >
+    	<div id = "addresses">
+	      <input type="text" id="item_0" name="item_0" placeholder="Type address..." required />
+	      <button type="button" id="add_address">Add address</button>
+	  	</div>
+    <br>
+    <br>
+    <br>
+    <input id="total" type="hidden" name="total" value="1" />
+  	<button type="submit" href="/result">Coverge!</button>
     </form>
   </div>
 </body>
 
 </html>
+
+<script>
+	var total = 1;
+	$(function(){
+
+        $("#add_address").click(create_new_address);
+
+        function create_new_address(event) {
+        	if (total <= 10 && $("#item_" + (total-1)).val()) {
+
+	        	$("#add_address").remove();
+
+	        	var new_input = $("<input>");
+	        	$(new_input).attr("type", "text");
+	        	$(new_input).attr("name", "item_" + total);
+	        	$(new_input).attr("id", "item_" + total);
+	        	$(new_input).attr("placeholder", "Type address...");
+	        	$(new_input).attr("required", "true");
+
+	        	var new_button = $("<button>");
+	        	$(new_button).attr("type", "button");
+	        	$(new_button).attr("id", "add_address");
+	        	$(new_button).text("Add address");
+	        	$(new_button).click(create_new_address);
+
+	        	$("#addresses").append(new_input);
+	        	$("#addresses").append(new_button);
+	        	
+	        	total += 1;
+	        	$("#total").val(total);
+        	} 
+
+        }
+    });
+</script>
