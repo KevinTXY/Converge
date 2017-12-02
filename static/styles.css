@@ -1,4 +1,6 @@
 body{
+    position: center;
+    background-position: center;
     background-image: url("https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&ved=0ahUKEwjdtPfhnuzXAhVwct8KHQBDDJkQjRwIBw&url=https%3A%2F%2Fstackoverflow.com%2Fquestions%2F600743%2Fhow-to-get-div-height-to-auto-adjust-to-background-size&psig=AOvVaw3saHFjQO80zrumLkHhi9TS&ust=1512335460233685");
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -16,13 +18,10 @@ h1 {
 }
 
 #todo-table{
-    position: relative;
-    width: 50%;
-    right: 200px;
+    position: center;
     background: #090d13;
     margin: 0 auto;
-    padding: 20px;
-    box-sizing: border-box;
+    padding: 10px;
 }
 
 #todo-table form:after{
@@ -30,6 +29,7 @@ h1 {
     content: '';
     display: block;
     clear: both;
+    width: 500px;
 }
 
 input[type="text"]{
@@ -85,8 +85,10 @@ h1{
 
 
 .button {
+    position: center;
     background-image: url('https://i.imgur.com/4wfJtlc.png');
     background-size: cover;
+    text-align: center;
     width: 280px;
     height: 44px;
     margin: 0 auto;
