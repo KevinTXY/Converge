@@ -8,3 +8,9 @@ def init():
 @app.route("/result")
 def result():
     return render_template("result.html")
+
+@app.route('/', methods=['POST'])
+def submit():
+
+
+    return render_template("result.html")
