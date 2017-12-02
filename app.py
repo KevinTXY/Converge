@@ -62,9 +62,13 @@ def result():
 		for i in range(int(total)):
 			items.append(request.form.get('item_' + str(i)))
 
-		type = request.form.get('type');
+		total_types = int(request.form.get('total_types'));
 
-		return render_template("result.html", total = total, items = items, type = type)
+		types = [];
+		for i in range(int(total_types)):
+			types.append(request.form.get('type_' + str(i)));
+
+		return render_template("result.html", total = total, items = items, types = types, total_types = total_types)
 
 @app.route('/', methods=['POST'])
 def submit():

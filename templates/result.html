@@ -15,7 +15,10 @@
     {% for i in range(0, total): %}
       <input hidden value="{{ items[i] }}" name="items_{{ i }}" id="items_{{ i }}"/>
     {% endfor %}
-    <input hidden value="{{ type }}" name="{{ type }}" id="type"/>
+    <input hidden value="{{ total_types }}" name="{{ total_types }}" id="total_types"/>
+    {% for i in range(0, total_types): %}
+      <input hidden value="{{ types[i] }}" name="type_{{ i }}" id="type_{{ i }}"/>
+    {% endfor %}
 
     <div id="map"></div>
     <script>
@@ -34,13 +37,19 @@
           var map
 
           var total = $("#total").val();
-          var type = $("#type").val();
-          console.log("TYPE FIRST: type");
+          var total_types = $("#total_types").val();
 
           var items = [];
 
           for (var i = 0; i < total; i++) {
               items.push($("#items_" + i).val());
+          }
+
+          var types = [];
+          console.log("total types: " + total_types);
+          for (var i = 0; i < total_types; i++) {
+              types.push($("#type_" + i).val());
+              console.log("type " + i + ": " + types[i]);
           }
 
           var sum_lat = 0;
@@ -99,12 +108,15 @@
                       });
                       marker.setMap(map);
 
-                      var service = new google.maps.places.PlacesService(map);
+                      for (var i = 0; i < total_types; i++) {
+                          var service = new google.maps.places.PlacesService(map);
                                   service.nearbySearch({
                                     location:location,
                                     radius: 500,
-                                    type: [type]
+                                    type: types[i]
                                   }, callback);
+                      }
+
                       function callback(results, status) {
                         if (status === google.maps.places.PlacesServiceStatus.OK){
                           for (var i=0; i < results.length; i++) {
