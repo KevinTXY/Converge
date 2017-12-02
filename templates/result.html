@@ -8,21 +8,78 @@
        }
     </style>
   </head>
+  <script src = "https://code.jquery.com/jquery-1.12.3.min.js"></script>  <body>
   <body>
     <h3>My Google Maps Demo</h3>
+    <input hidden value="{{ total }}" id="total" name="total"/>
+    {% for i in range(0, total): %}
+      <input hidden value="{{ items[i] }}" name="items_{{ i }}" id="items_{{ i }}"/>
+    {% endfor %}
+
     <div id="map"></div>
     <script>
-      function initMap() {
-        var uluru = {lat: -25.363, lng: 131.044};
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 4,
-          center: uluru
+
+      
+
+      $(function() {
+
+        $(window).load(function(){
+          var map
+
+          var total = $("#total").val();
+
+          var items = [];
+
+          for (var i = 0; i < total; i++) {
+              items.push($("#items_" + i).val());
+          }
+
+          var sum_lat = 0;
+          var sum_long = 0;
+
+          var calls_remaining = total;
+
+          for (var i = 0; i < total; i++) {
+              console.log(items[i]);
+              $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" 
+                + encodeURIComponent(items[i])
+                + "&key=AIzaSyASFadX1MvoP2EccKogmGEyyza8UGcwHbU",
+                function(data) {
+                    console.log(data);
+                    sum_lat += data.results[0].geometry.location.lat;
+                    sum_long += data.results[0].geometry.location.lng;
+
+                    calls_remaining--;
+                    if (calls_remaining <= 0) {
+                      var avg_lat = sum_lat / total;
+                      var avg_long = sum_long / total;
+                      console.log(avg_lat, avg_long);
+
+                      map = new google.maps.Map($("#map").get(0), {
+                            center: {lat: avg_lat, lng: avg_long},
+                            disableDefaultUI: true,
+                            mapTypeId: google.maps.MapTypeId.ROADMAP,
+                            maxZoom: 14,
+                            panControl: true,
+                            zoom: 13,
+                            zoomControl: true
+                        });
+
+
+                      var location = new google.maps.LatLng(avg_lat, avg_long);
+                      var label = "This is a label. You're on the Google Maps team sure";
+                      var marker = new google.maps.Marker({
+                        position: location,
+                        label: label
+                      });
+                      marker.setMap(map);
+                    }
+                });
+          }
+
         });
-        var marker = new google.maps.Marker({
-          position: uluru,
-          map: map
-        });
-      }
+      });
+
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc6mdcCJazqLOtekNhnf0VFh624UoImWg&callback=initMap">
