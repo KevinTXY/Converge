@@ -19,7 +19,9 @@
     <div id="map"></div>
     <script>
 
+      function initMap() {
 
+      }
 
       $(function() {
 
@@ -41,6 +43,7 @@
 
           var calls_remaining = total;
           var points = [];
+
           for (var i = 0; i < total; i++) {
               console.log(items[i]);
               $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="
@@ -90,16 +93,46 @@
                         label: label,
                       });
                       marker.setMap(map);
-                    }
-                });
-          }
 
+                      var service = new google.maps.places.PlacesService(map);
+                                  service.nearbySearch({
+                                    location:location,
+                                    radius: 500,
+                                    type: ['restaurant']
+                                  }, callback);
+                      function callback(results, status) {
+                        if (status === google.maps.places.PlacesServiceStatus.OK){
+                          for (var i=0; i < results.length; i++) {
+                            createMarker(results[i]);
+                          }
+                        }
+                      }
+                      var infowindow = new google.maps.InfoWindow({});
+                      function createMarker(place) {
+                        var placeLoc = place.geometry.location;
+                        var marker = new google.maps.Marker({
+                          map:map,
+                          position: place.geometry.location
+                        });
+                        google.maps.event.addListener(marker, 'click', function() {
+                          var content = "";
+                          content += "<img width=\"15px\" src=\"" + place.icon + "\">";
+                          content +=  "<b> " + place.name + "</b><br>";
+                          content += "Address: " + place.vicinity; + "<br>";
+
+                          infowindow.setContent(content);
+                          infowindow.open(map, this);
+                        });
+                      }
+                    }
+                  });
+            }
         });
       });
 
     </script>
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc6mdcCJazqLOtekNhnf0VFh624UoImWg&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc6mdcCJazqLOtekNhnf0VFh624UoImWg&callback=initMap&libraries=places">
     </script>
   </body>
 </html>
