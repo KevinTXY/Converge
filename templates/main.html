@@ -17,9 +17,19 @@
     <br>
     <br>
     <input id="total" type="hidden" name="total" value="1" />
-  	<button type="submit" href="/result">Converge!</button>
+    <form id="address_form" method="post" action="/result" >
+          <select class="form-control" name="options">
+              <option disabled selected value="">Locations</option>
+                  {% for i in types %}
+                      <option value="{{ i.code }}">{{ i.val }}</option>
+                  {% endfor %}
+          </select>    
+  	<button type="submit" href="/result">Coverge!</button>
     </form>
-  </div>
+    </br>
+    </br>
+    <br>
+
 </body>
 
 </html>
