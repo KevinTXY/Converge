@@ -24,6 +24,8 @@
       $(function() {
 
         $(window).load(function(){
+          var image = "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+
           var map
 
           var total = $("#total").val();
@@ -38,7 +40,7 @@
           var sum_long = 0;
 
           var calls_remaining = total;
-
+          var points = [];
           for (var i = 0; i < total; i++) {
               console.log(items[i]);
               $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="
@@ -48,7 +50,9 @@
                     console.log(data);
                     sum_lat += data.results[0].geometry.location.lat;
                     sum_long += data.results[0].geometry.location.lng;
-
+                    points.push([data.results[0].geometry.location.lat, data.results[0].geometry.location.lng]);
+                    console.log("LAT:" + data.results[0].geometry.location.lng);
+                    console.log("LNG:" + data.results[0].geometry.location.lat);
                     calls_remaining--;
                     if (calls_remaining <= 0) {
                       var avg_lat = sum_lat / total;
@@ -64,13 +68,26 @@
                             zoom: 13,
                             zoomControl: true
                         });
+                        console.log(data.results)
 
+                        var i = 0
+                        points.forEach(function(element){
+                          console.log("THIS ELEMENT:  " + element);
+                          var loc = new google.maps.LatLng(element[0], element[1]);
+                          var mark = new google.maps.Marker({
+                            position: loc,
+                            label: i.toString(),
+                            icon: image
+                          });
+                          i++;
+                          mark.setMap(map);
+                        });
 
                       var location = new google.maps.LatLng(avg_lat, avg_long);
-                      var label = "Center";
+                      var label = "P";
                       var marker = new google.maps.Marker({
                         position: location,
-                        label: label
+                        label: label,
                       });
                       marker.setMap(map);
                     }
