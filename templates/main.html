@@ -89,7 +89,7 @@
 	$(function(){
 
         $("#add_address").click(create_new_address);
-        $("add_type").click(create_new_type);
+        $("#add_type").click(create_new_type);
 
         function create_new_address(event) {
           if (total <= 10 && $("#item_" + (total-1)).val()) {
@@ -146,11 +146,11 @@
 
                 var new_button = $("<button>");
                 $(new_button).attr("type", "button");
-                $(new_button).attr("id", "add_types");
+                $(new_button).attr("id", "add_type");
                 $(new_button).text("Add option");
                 $(new_button).click(create_new_type);
 
-                $("#types").append(new_input);
+                $("#types").append(new_select);
                 $("#types").append(new_button);
 
                 total_types += 1;
