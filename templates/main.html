@@ -9,6 +9,19 @@
 
   <div id="todo-table">
     <form id="address_form" method="post" action="/result" >
+    	Find...
+    	<br/>
+    	<div id="types">
+	  		<select class="form-control" name="type_0" id="type_0" >
+              	<option disabled selected value="">Find...</option>
+                  {% for i in types %}
+                      <option value="{{ i.code }}">{{ i.val }}</option>
+                  {% endfor %}
+          	</select> 
+          	<button type="button" id="add_type">Add type</button>
+	  	</div>
+	  	Closest to...
+	  	<br/>
     	<div id = "addresses">
 	      <input type="text" id="item_0" name="item_0" placeholder="Type address..." required />
 	      <button type="button" id="add_address">Add address</button>
@@ -16,14 +29,9 @@
     <br>
     <br>
     <br>
+    <input id="total_types" type="hidden" name="total" value="1" />
     <input id="total" type="hidden" name="total" value="1" />
-    <form id="address_form" method="post" action="/result" >
-          <select class="form-control" name="options">
-              <option disabled selected value="">Locations</option>
-                  {% for i in types %}
-                      <option value="{{ i.code }}">{{ i.val }}</option>
-                  {% endfor %}
-          </select>    
+    <form id="address_form" method="post" action="/result" >   
   	<button type="submit" href="/result">Coverge!</button>
     </form>
     </br>
@@ -35,10 +43,96 @@
 </html>
 
 <script>
+
+	types = [
+		{code: "airport", val: "Airports"},
+		{code: "amusement_park", val: "Amusement Parks"},
+		{code: "aquarium", val: "Aquariums"},
+		{code: "art_gallery", val: "Art Galleries"},
+		{code: "bakery", val: "Bakeries"},
+		{code: "bar", val: "Bars"},
+		{code: "beauty_salon", val: "Beauty Salons"},
+		{code: "book_store", val: "Book Stores"},
+		{code: "bowling_alley", val: "Bowling Allies"},
+		{code: "bus_station", val: "Bus Stations"},
+		{code: "cafe", val: "Cafes"},
+		{code: "casino", val: "Casinos"},
+		{code: "clothing_store", val: "Clothing Stores"},
+		{code: "florist", val: "Florists"},
+		{code: "gym", val: "Gyms"},
+		{code: "hindu_temple", val: "Hindu Temples"},
+		{code: "hospital", val: "Hospitals"},
+		{code: "jewelry_store", val: "Jewelry Stores"},
+		{code: "laundry", val: "Laundries"},
+		{code: "library", val: "Libraries"},
+		{code: "liquor_store", val: "Liquor Stores"},
+		{code: "mosque", val: "Mosques"},
+		{code: "movie_theater", val: "Movie Theaters"},
+		{code: "museum", val: "Museums"},
+		{code: "night_club", val: "Night Clubs"},
+		{code: "park", val: "Parks"},
+		{code: "restaurant", val: "Restaurants"},
+		{code: "school", val: "Schools"},
+		{code: "shoe_store", val: "Shoe Stores"},
+		{code: "shopping_mall", val: "Shopping Malls"},
+		{code: "spa", val: "Spas"},
+		{code: "stadium", val: "Stadiums"},
+		{code: "store", val: "Stores"},
+		{code: "subway_station", val: "Subway Stations"},
+		{code: "train_station", val: "Train Stations"},
+		{code: "university", val: "Universities"},
+		{code: "zoo", val: "Zoos"}
+	];
+
+
+
 	var total = 1;
+	var total_types = 1;
 	$(function(){
 
         $("#add_address").click(create_new_address);
+        $("add_type").click(create_new_type);
+
+        function create_new_type(event) {
+        	if (total <= 10 && $("#type_" + (total-1)).val()) {
+
+	        	$("#add_type").remove();
+
+	        	var new_select = $("<select>");
+	        	$(new_select).attr("class", "form-control");
+	        	$(new_select).attr("name", "type_" + total_types);
+	        	$(new_select).attr("id", "type_" + total_types);
+
+	        	var default_option = $("<option>");
+	        	$(default_option).attr("disabled", "true");
+	        	$(default_option).attr("selected", "true");
+	        	$(default_option).attr("value", "");
+	        	$(default_option).text("Find...");
+
+	        	$(new_select).append(default_option);
+
+	        	types.forEach(function(i){
+	        		var new_option = $("<option>");
+	        		$(new_option).attr("value", i.code);
+	        		$(new_option).text(i.val);
+
+	        		$(new_select).append(new_option);
+	        	});
+
+	        	var new_button = $("<button>");
+	        	$(new_button).attr("type", "button");
+	        	$(new_button).attr("id", "add_types");
+	        	$(new_button).text("Add option");
+	        	$(new_button).click(create_new_type);
+
+	        	$("#types").append(new_input);
+	        	$("#types").append(new_button);
+
+	        	total_types += 1;
+	        	$("#total_types").val(total_types);
+        }
+
+    }
 
         function create_new_address(event) {
         	if (total <= 10 && $("#item_" + (total-1)).val()) {
@@ -66,5 +160,5 @@
         	}
 
         }
-    });
+    }
 </script>
