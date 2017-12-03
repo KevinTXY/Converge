@@ -1,8 +1,8 @@
 body{
     position: center;
     background-position: center;
-    background-color: white;
     margin: 0 auto;
+    background-image: url("/static/space.jpg");
     font-family: tahoma;
     color: #989898;
 }
@@ -18,7 +18,7 @@ h1 {
     font-family: 'Ubuntu', sans-serif;
     font-weight: bolder;
     font-style: italic;
-    color: #ccccff;
+    color: #000000;
 }
 
 #todo-table{
@@ -53,6 +53,7 @@ button{
     float: left;
     background: #009688;
     border: 0;
+    border-radius: 5px;
     box-sizing: border-box;
     color: #fff;
     cursor: pointer;
@@ -97,6 +98,7 @@ h1{
     width: 200px;
     height: 44px;
     margin: 0 auto;
+    border-radius: 5px;
 }
 h3{
   text-align: center;

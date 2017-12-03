@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <style>
-       #map {
-        height: 700px;
-        width: 100%;
-        border-radius: 10px;
-        border: 5px;
-       }
-    </style>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"/>
-    <link href="static/result.css" rel="stylesheet" type="text/css"  />
-  </head>
-  <script src = "https://code.jquery.com/jquery-1.12.3.min.js"></script>  <body>
+
+<head>
+  <style>
+    #map {
+      height: 700px;
+      width: 100%;
+      border-radius: 10px;
+      border: 5px;
+    }
+  </style>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous" />
+  <link href="static/result.css" rel="stylesheet" type="text/css" />
+</head>
+<script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+
+<body>
+
   <body>
     <a href="/">
       <div id="back">
@@ -20,18 +24,13 @@
       </div>
     </a>
     <h3> Results</h3>
-    <input hidden value="{{ total }}" id="total" name="total"/>
-    {% for i in range(0, total): %}
-      <input hidden value="{{ items[i] }}" name="items_{{ i }}" id="items_{{ i }}"/>
-    {% endfor %}
-    <input hidden value="{{ total_types }}" name="{{ total_types }}" id="total_types"/>
-    {% for i in range(0, total_types): %}
-      <input hidden value="{{ types[i] }}" name="type_{{ i }}" id="type_{{ i }}"/>
-    {% endfor %}
+    <input hidden value="{{ total }}" id="total" name="total" /> {% for i in range(0, total): %}
+    <input hidden value="{{ items[i] }}" name="items_{{ i }}" id="items_{{ i }}" /> {% endfor %}
+    <input hidden value="{{ total_types }}" name="{{ total_types }}" id="total_types" /> {% for i in range(0, total_types): %}
+    <input hidden value="{{ types[i] }}" name="type_{{ i }}" id="type_{{ i }}" /> {% endfor %}
 
     <div id="map"></div>
     <script>
-
       function initMap() {
 
       }
@@ -39,7 +38,7 @@
 
       $(function() {
 
-        $(window).load(function(){
+        $(window).load(function() {
           var uber = "https://i.imgur.com/uluhV3G.png"
           var image = "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
 
@@ -51,14 +50,14 @@
           var items = [];
 
           for (var i = 0; i < total; i++) {
-              items.push($("#items_" + i).val());
+            items.push($("#items_" + i).val());
           }
 
           var types = [];
           console.log("total types: " + total_types);
           for (var i = 0; i < total_types; i++) {
-              types.push($("#type_" + i).val());
-              console.log("type " + i + ": " + types[i]);
+            types.push($("#type_" + i).val());
+            console.log("type " + i + ": " + types[i]);
           }
 
           var sum_lat = 0;
@@ -68,98 +67,101 @@
           var points = [];
 
           for (var i = 0; i < total; i++) {
-              console.log(items[i]);
-              $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="
-                + encodeURIComponent(items[i])
-                + "&key=AIzaSyASFadX1MvoP2EccKogmGEyyza8UGcwHbU",
-                function(data) {
-                    console.log(data);
-                    sum_lat += data.results[0].geometry.location.lat;
-                    sum_long += data.results[0].geometry.location.lng;
-                    points.push([data.results[0].geometry.location.lat, data.results[0].geometry.location.lng]);
-                    console.log("LAT:" + data.results[0].geometry.location.lng);
-                    console.log("LNG:" + data.results[0].geometry.location.lat);
-                    calls_remaining--;
-                    if (calls_remaining <= 0) {
-                      var avg_lat = sum_lat / total;
-                      var avg_long = sum_long / total;
-                      console.log(avg_lat, avg_long);
+            console.log(items[i]);
+            $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" +
+              encodeURIComponent(items[i]) +
+              "&key=AIzaSyASFadX1MvoP2EccKogmGEyyza8UGcwHbU",
+              function(data) {
+                console.log(data);
+                sum_lat += data.results[0].geometry.location.lat;
+                sum_long += data.results[0].geometry.location.lng;
+                points.push([data.results[0].geometry.location.lat, data.results[0].geometry.location.lng]);
+                console.log("LAT:" + data.results[0].geometry.location.lng);
+                console.log("LNG:" + data.results[0].geometry.location.lat);
+                calls_remaining--;
+                if (calls_remaining <= 0) {
+                  var avg_lat = sum_lat / total;
+                  var avg_long = sum_long / total;
+                  console.log(avg_lat, avg_long);
 
-                      map = new google.maps.Map($("#map").get(0), {
-                            center: {lat: avg_lat, lng: avg_long},
-                            disableDefaultUI: true,
-                            mapTypeId: google.maps.MapTypeId.ROADMAP,
-                            maxZoom: 14,
-                            panControl: true,
-                            zoom: 13,
-                            zoomControl: true
-                        });
-                        console.log(data.results)
+                  map = new google.maps.Map($("#map").get(0), {
+                    center: {
+                      lat: avg_lat,
+                      lng: avg_long
+                    },
+                    disableDefaultUI: true,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP,
+                    maxZoom: 14,
+                    panControl: true,
+                    zoom: 13,
+                    zoomControl: true
+                  });
+                  console.log(data.results)
 
-                        var i = 0
-                        points.forEach(function(element){
-                          console.log("THIS ELEMENT:  " + element);
-                          var loc = new google.maps.LatLng(element[0], element[1]);
-                          var mark = new google.maps.Marker({
-                            position: loc,
-                            label: i.toString(),
-                            icon: image
-                          });
-                          i++;
-                          mark.setMap(map);
-                        });
+                  var i = 0
+                  points.forEach(function(element) {
+                    console.log("THIS ELEMENT:  " + element);
+                    var loc = new google.maps.LatLng(element[0], element[1]);
+                    var mark = new google.maps.Marker({
+                      position: loc,
+                      label: i.toString(),
+                      icon: image
+                    });
+                    i++;
+                    mark.setMap(map);
+                  });
 
-                      var location = new google.maps.LatLng(avg_lat, avg_long);
-                      var label = "P";
-                      var marker = new google.maps.Marker({
-                        position: location,
-                        label: label,
-                      });
-                      marker.setMap(map);
+                  var location = new google.maps.LatLng(avg_lat, avg_long);
+                  var label = "P";
+                  var marker = new google.maps.Marker({
+                    position: location,
+                    label: label,
+                  });
+                  marker.setMap(map);
 
-                      for (var i = 0; i < total_types; i++) {
-                          var service = new google.maps.places.PlacesService(map);
-                                  service.nearbySearch({
-                                    location:location,
-                                    radius: 1000,
-                                    type: types[i]
-                                  }, callback);
-                      }
+                  for (var i = 0; i < total_types; i++) {
+                    var service = new google.maps.places.PlacesService(map);
+                    service.nearbySearch({
+                      location: location,
+                      radius: 1000,
+                      type: types[i]
+                    }, callback);
+                  }
 
-                      function callback(results, status) {
-                        if (status === google.maps.places.PlacesServiceStatus.OK){
-                          for (var i=0; i < results.length; i++) {
-                            createMarker(results[i]);
-                          }
-                        }
-                      }
-                      var infowindow = new google.maps.InfoWindow({});
-                      function createMarker(place) {
-                        var placeLoc = place.geometry.location;
-                        var marker = new google.maps.Marker({
-                          map:map,
-                          position: place.geometry.location
-                        });
-                        google.maps.event.addListener(marker, 'click', function() {
-                          var content = "";
-                          content += "<img width=\"15px\" src=\"" + place.icon + "\">";
-                          content +=  "<b> " + place.name + "</b><br>";
-                          content += "Address: " + place.vicinity; + "<br>";
-                          content +="</br><a href=\"https://m.uber.com/ul/?action=setPickup\"><img width=\"30%\" height=\"50%\" src=\"" + uber + "\" /></a>";
-
-                          infowindow.setContent(content);
-                          infowindow.open(map, this);
-                        });
+                  function callback(results, status) {
+                    if (status === google.maps.places.PlacesServiceStatus.OK) {
+                      for (var i = 0; i < results.length; i++) {
+                        createMarker(results[i]);
                       }
                     }
-                  });
-            }
+                  }
+                  var infowindow = new google.maps.InfoWindow({});
+
+                  function createMarker(place) {
+                    var placeLoc = place.geometry.location;
+                    var marker = new google.maps.Marker({
+                      map: map,
+                      position: place.geometry.location
+                    });
+                    google.maps.event.addListener(marker, 'click', function() {
+                      var content = "";
+                      content += "<img width=\"15px\" src=\"" + place.icon + "\">";
+                      content += "<b> " + place.name + "</b><br>";
+                      content += "Address: " + place.vicinity; + "<br>";
+                      content += "</br><a href=\"https://m.uber.com/ul/?action=setPickup\"><img width=\"30%\" height=\"50%\" src=\"" + uber + "\" /></a>";
+
+                      infowindow.setContent(content);
+                      infowindow.open(map, this);
+                    });
+                  }
+                }
+              });
+          }
         });
       });
-
     </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc6mdcCJazqLOtekNhnf0VFh624UoImWg&callback=initMap&libraries=places">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc6mdcCJazqLOtekNhnf0VFh624UoImWg&callback=initMap&libraries=places">
     </script>
   </body>
+
 </html>
