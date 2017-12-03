@@ -123,7 +123,7 @@
         }
 
         function create_new_type(event) {
-            if (total <= 10 && $("#type_" + (total-1)).val()) {
+            if (total_types <= 10 && $("#type_" + (total-1)).val()) {
 
                 $("#add_type").remove();
 
@@ -154,6 +154,7 @@
                 $(new_button).text("Add option");
                 $(new_button).click(create_new_type);
 
+                $("#types").append("  or  ");
                 $("#types").append(new_select);
                 $("#types").append(new_button);
 

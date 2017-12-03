@@ -50,7 +50,6 @@
 
       }
 
-
       $(function() {
 
         $(window).load(function() {
@@ -175,6 +174,7 @@
                   }
 
                   var infowindow = new google.maps.InfoWindow({});
+                  var closest = new google.maps.LatLng();
 
                   function createMarker(place, first) {
                     var placeLoc = place.geometry.location;
