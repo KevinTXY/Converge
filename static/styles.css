@@ -3,7 +3,7 @@ body{
     background-position: center;
     margin: 0 auto;
     background-image: url("/static/space.jpg");
-    font-family: tahoma;
+    font-family: 'Ubuntu', sans-serif;
     color: #989898;
 }
 .form-control{
@@ -12,13 +12,20 @@ body{
   margin: 0px;
   padding: 0px;
 }
+
+option {
+    font-family: 'Ubuntu', sans-serif;
+}
+
 h1 {
   text-align: center;
     display: block;
     font-family: 'Ubuntu', sans-serif;
     font-weight: bolder;
     font-style: italic;
-    color: #000000;
+    color: #FFFFFF;
+    font-size: 48pt;
+    text-shadow: 5px 5px rgba(00, 00, 00, 0.5);
 }
 
 #todo-table{
@@ -58,6 +65,7 @@ button{
     color: #fff;
     cursor: pointer;
     font-size: 20px;
+    vertical-align: center;
 }
 
 ul{
@@ -70,7 +78,6 @@ li{
     width: 100%;
     padding: 20px;
     box-sizing: border-box;
-    font-family: arial;
     font-size: 20px;
     cursor: pointer;
     letter-spacing: 1px;
@@ -103,7 +110,6 @@ h1{
 h3{
   text-align: center;
   font-weight: bold;
-  font-family: cursive;
 }
 
 .converge{
@@ -118,4 +124,5 @@ h3{
   width: 200px;
   height: 50px;
   align-items: center;
+  vertical-align: center;
 }
