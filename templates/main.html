@@ -9,8 +9,9 @@
 
   <center><div id="todo-table">
     <form id="address_form" method="post" action="/result" >
-    	Find the ideal meeting spot for your party.
-    	<br/>
+    	Find the ideal meeting spot for your party!
+    	<br>
+    	<br>
     	<div id="types">
 	  		<select class="form-control" name="type_0" id="type_0" >
               	<option disabled selected value="">Find...</option>
@@ -20,8 +21,8 @@
           	</select>
           	<button type="button" id="add_type">Add type</button>
 	  	</div>
+	  	<br>
 	  	Closest to...
-	  	<br/>
 	  	<br/>
         <br/>
     	<div id = "addresses">
@@ -122,7 +123,7 @@
         }
 
         function create_new_type(event) {
-            if (total <= 10 && $("#type_" + (total-1)).val()) {
+            if (total_types <= 10 && $("#type_" + (total-1)).val()) {
 
                 $("#add_type").remove();
 
@@ -153,6 +154,7 @@
                 $(new_button).text("Add option");
                 $(new_button).click(create_new_type);
 
+                $("#types").append("  or  ");
                 $("#types").append(new_select);
                 $("#types").append(new_button);
 
