@@ -1,6 +1,22 @@
 body{
-  background-color: #E0F7FA
 }
 h3{
   text-align: center;
+  margin: 0px;
+  padding: 0px;
+}
+
+.back{
+  height: auto;
+  width: auto;
+  background-color: #009688;
+  border: 2px;
+  width:30px;
+  height: 30px;
+  border-color: black;
+  border-radius: 5px;
+  position: relative;
+  display:inline-block;
+  margin: 0px;
+  padding: 0px;
 }

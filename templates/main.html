@@ -5,11 +5,11 @@
    <link href="static/styles.css" rel="stylesheet" type="text/css"  />
 </head>
 <body>
-  <h1>  Add New Addresses </h1>
+  <h1> Converge </h1>
 
   <center><div id="todo-table">
     <form id="address_form" method="post" action="/result" >
-    	Find...
+    	Find the ideal meeting spot for your party.
     	<br/>
     	<div id="types">
 	  		<select class="form-control" name="type_0" id="type_0" >
@@ -18,7 +18,7 @@
                       <option value="{{ i.code }}">{{ i.val }}</option>
                   {% endfor %}
           	</select>
-          	<button type="button" id="add_type">Add type</button> 
+          	<button type="button" id="add_type">Add type</button>
 	  	</div>
 	  	Closest to...
 	  	<br/>
@@ -33,14 +33,9 @@
     <br>
     <input id="total_types" type="hidden" name="total_types" value="1" />
     <input id="total" type="hidden" name="total" value="1" />
-    <form id="address_form" method="post" action="/result" >   
+    <form id="address_form" method="post" action="/result" >
     </br>
-	</br>
-	</br>
-	</br>
-	</br>
-	</br>
-  	<center><button type="submit" href="/result">Converge!</button></center>
+  	<center><button class = "converge" type="submit" href="/result"> Converge! </button></center>
     </form>
     </br>
     </br>

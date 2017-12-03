@@ -1,17 +1,22 @@
 body{
     position: center;
     background-position: center;
-    background-image: url("https://www.planwallpaper.com/static/images/recycled_texture_background_by_sandeep_m-d6aeau9_PZ9chud.jpg");
-    background-attachment: fixed;
+    background-color: white;
     margin: 0 auto;
     font-family: tahoma;
     color: #989898;
 }
-
+.form-control{
+  background-color: #009698;
+  border-radius: 5px;
+  margin: 0px;
+  padding: 0px;
+}
 h1 {
-    display: inline;
+  text-align: center;
+    display: block;
     font-family: 'Ubuntu', sans-serif;
-    font-weight: lighter;
+    font-weight: bolder;
     font-style: italic;
     color: #ccccff;
 }
@@ -92,4 +97,23 @@ h1{
     width: 200px;
     height: 44px;
     margin: 0 auto;
+}
+h3{
+  text-align: center;
+  font-weight: bold;
+  font-family: cursive;
+}
+
+.converge{
+  display: block;
+  margin: 0 auto;
+  float: none;
+
+}
+
+#add_type{
+  text-align: center;
+  width: 200px;
+  height: 50px;
+  align-items: center;
 }

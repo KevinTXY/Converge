@@ -3,8 +3,10 @@
   <head>
     <style>
        #map {
-        height: 400px;
+        height: 700px;
         width: 100%;
+        border-radius: 10px;
+        border: 5px;
        }
     </style>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"/>
@@ -12,7 +14,12 @@
   </head>
   <script src = "https://code.jquery.com/jquery-1.12.3.min.js"></script>  <body>
   <body>
-    <h3>My Google Maps Demo</h3>
+    <a href="/">
+      <div id="back">
+        <h2> Back </h2>
+      </div>
+    </a>
+    <h3> Results</h3>
     <input hidden value="{{ total }}" id="total" name="total"/>
     {% for i in range(0, total): %}
       <input hidden value="{{ items[i] }}" name="items_{{ i }}" id="items_{{ i }}"/>
@@ -114,7 +121,7 @@
                           var service = new google.maps.places.PlacesService(map);
                                   service.nearbySearch({
                                     location:location,
-                                    radius: 500,
+                                    radius: 1000,
                                     type: types[i]
                                   }, callback);
                       }
