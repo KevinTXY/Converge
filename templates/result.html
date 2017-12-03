@@ -49,6 +49,11 @@
       function initMap() {
 
       }
+      
+      function calculateDistance(a, b) {
+        return Math.sqrt(Math.pow(a.lat() - b.lat(),2) + Math.pow(a.lng() - b.lng(),2))
+      }
+
 
       $(function() {
 
@@ -174,7 +179,10 @@
                   }
 
                   var infowindow = new google.maps.InfoWindow({});
-                  var closest = new google.maps.LatLng();
+                  var closest = new google.maps.LatLng({
+                    lat: -avg_lat,
+                    lng: -avg_long
+                  });
 
                   function createMarker(place, first) {
                     var placeLoc = place.geometry.location;
@@ -194,8 +202,11 @@
                     });
 
                     if (first) {
-                      new google.maps.event.trigger(marker, 'click');
-                      map.panTo(marker.position);
+                      if (calculateDistance(marker.position, location) < calculateDistance(closest, location)) {
+                        closes = marker.position;
+                        new google.maps.event.trigger(marker, 'click');
+                        map.panTo(marker.position);
+                      }
                     }
                   }
                 }
