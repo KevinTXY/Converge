@@ -9,6 +9,21 @@
       border-radius: 10px;
       border: 5px;
     }
+
+    body{
+      position: center;
+      background-position: center;
+      margin: 0 auto;
+      background-image: url("/static/space.jpg");
+      font-family: tahoma;
+      color: #989898;
+    }
+
+    img.center {
+        display: block;
+        margin: 0 auto;
+    }
+
   </style>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous" />
   <link href="static/result.css" rel="stylesheet" type="text/css" />
@@ -39,6 +54,9 @@
       $(function() {
 
         $(window).load(function() {
+
+          var location;
+
           var uber = "https://i.imgur.com/uluhV3G.png"
           var image = "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
 
@@ -111,48 +129,70 @@
                     mark.setMap(map);
                   });
 
-                  var location = new google.maps.LatLng(avg_lat, avg_long);
-                  var label = "P";
+                  location = new google.maps.LatLng(avg_lat, avg_long);
+/*                  var label = "P";
                   var marker = new google.maps.Marker({
                     position: location,
                     label: label,
                   });
-                  marker.setMap(map);
+                  marker.setMap(map);*/
+
 
                   for (var i = 0; i < total_types; i++) {
                     var service = new google.maps.places.PlacesService(map);
                     service.nearbySearch({
                       location: location,
-                      radius: 1000,
-                      type: types[i]
+                      //radius: 1000,
+                      type: types[i],
+                      rankBy: google.maps.places.RankBy.DISTANCE
                     }, callback);
                   }
 
                   function callback(results, status) {
+                    console.log(status);
+                    if (status !== google.maps.places.PlacesServiceStatus.OK) {
+                      $("#map").remove();
+                      var content = "";
+                      content += "<h1 style=\"text-align:center\">No results found :( </h1>";
+                      content += "<img class=\"center\" src =\"http://www.reactiongifs.us/wp-content/uploads/2013/06/raining_david_tennant.gif\" />";
+                      content += "<br>"
+                      $(document.body).append(content);
+                    }
                     if (status === google.maps.places.PlacesServiceStatus.OK) {
                       for (var i = 0; i < results.length; i++) {
-                        createMarker(results[i]);
+                        if (i == 0) {
+                          createMarker(results[i], true);
+                        }
+                        else {
+                          createMarker(results[i], false);
+                        }
                       }
                     }
                   }
+
                   var infowindow = new google.maps.InfoWindow({});
 
-                  function createMarker(place) {
+                  function createMarker(place, first) {
                     var placeLoc = place.geometry.location;
                     var marker = new google.maps.Marker({
                       map: map,
-                      position: place.geometry.location
+                      position: place.geometry.location,
                     });
+
                     google.maps.event.addListener(marker, 'click', function() {
                       var content = "";
                       content += "<img width=\"15px\" src=\"" + place.icon + "\">";
                       content += "<b> " + place.name + "</b><br>";
                       content += "Address: " + place.vicinity; + "<br>";
                       content += "</br><a href=\"https://m.uber.com/ul/?action=setPickup\"><img width=\"30%\" height=\"50%\" src=\"" + uber + "\" /></a>";
-
                       infowindow.setContent(content);
                       infowindow.open(map, this);
                     });
+
+                    if (first) {
+                      new google.maps.event.trigger(marker, 'click');
+                      map.panTo(marker.position);
+                    }
                   }
                 }
               });
